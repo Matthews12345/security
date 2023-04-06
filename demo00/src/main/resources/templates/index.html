@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6" lang="en"> <!--Шаблонизатор th: - берет данные из backend -->
+<head>
+    <meta charset="UTF-8">
+    <meta href="login.html">
+    <title>Client management system</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+</head>
+<style type="text/css">
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+    /** {*/
+    /*    margin: 0;*/
+    /*    padding: 0;*/
+    /*    box-sizing: border-box;*/
+    /*}*/
+    body {
+        align-items: center;
+        justify-content: center;
+    }
+    .sign_out {
+        width: 130px;
+        height: 50px;
+        background: transparent;
+        border: 2px solid #ffffff;
+        outline: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1.1em;
+        color: #ffffff;
+        font-weight: 500;
+        transition: .5s;
+        margin-left: 85%;
+        margin-top: -55%;
+    }
+    .sign_out:hover {
+        background: #ffffff;
+        color: #162938;
+    }
+    .register_btn {
+        position: absolute;
+        width: 130px;
+        height: 50px;
+        background: transparent;
+        border: 2px solid #ffffff;
+        outline: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1.1em;
+        color: #ffffff;
+        font-weight: 500;
+        transition: .5s;
+        margin-left: 37.75%;
+        margin-top: 0.7%;
+
+    }
+    .register_btn:hover {
+        background: #ffffff;
+        color: #162938;
+    }
+    #intro_btn1 {
+        height: 50px;
+        background-color: #1554c0;
+        margin-top: 10px;
+        opacity: 0.9;
+        display: inline-block; /* Add this line */
+    }
+    #user {
+        width: 130px;
+        height: 50px;
+        background: transparent;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        font-size: 1.1em;
+        color: #ffffff;
+        font-weight: 500;
+        border-bottom: thick solid #ffffff; /* Add this line */
+        display: inline-block; /* Add this line */
+        float: right; /* Add this line */
+        margin-top: -4%;
+        margin-right: 3%;
+        text-align: right;
+    }
+    .icon {
+        position: absolute;
+        right: 8px;
+        font-size: 1.6em;
+        color: #ffffff;
+        line-height: 57px;
+        margin-right: 9.7%;
+        margin-top: -4.2%;
+    }
+    #intro_btn2 {
+        background-color: #dcd1d1;
+        padding: 5px;
+        width: 450px;
+        border-radius: 10px;
+        opacity: 0.8;
+        text-align: center;
+        /*position: center;*/
+        align-content: center;
+        margin-top: -5%;
+    }
+    .bg-image {
+        background-image: url(https://4kwallpapers.com/images/walls/thumbs_3t/7564.png);
+        background-position: center;
+        background-size: cover;
+        overflow: auto;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        overflow-x: hidden;
+
+    }
+    table {
+        /*border: 1px solid #f49131;*/
+        border-radius: 1rem;
+        overflow-y:scroll;
+        height:300px;
+        width: 60%;
+        display: block;
+        text-align: center;
+        /*position: center;*/
+        align-content: center;
+        margin-left: 320px
+    }
+    tbody {
+        height: 100px;
+        overflow: auto;
+        text-align: center;
+        /*position: center;*/
+        align-content: center;
+    }
+    .tg {
+        border-collapse:collapse;
+        border-color: #00ffff;
+        border-spacing:0;
+        margin:auto;
+    }
+    .tg td {
+        background-color: #bdbdbd;
+        border-color: #0e0d0d;
+        border-style:solid;
+        border-width:1px;
+        color: #000000;
+        font-family:Arial, sans-serif;
+        font-size:18px;
+        overflow: hidden;
+        font-weight: bold;
+        padding:10px 5px;
+        word-break:normal;
+        text-align: center;
+        /*position: center;*/
+
+    }
+    .tg th {
+        background-color: #3a66b0;
+        border-color: #030303;
+        border-style:solid;
+        border-width:1px;
+        color: #151514;
+        font-family:Arial, sans-serif;
+        font-size:16px;
+        font-weight:normal;
+        padding: 10px 5px;
+        word-break:normal;
+    }
+    .tg .tg-0lax {
+        text-align:center;
+        vertical-align:top;
+    }
+    .tg-sort-header::-moz-selection{background:0 0}
+    .tg-sort-header::selection{background:0 0}
+    .tg-sort-header{cursor:pointer}
+    .tg-sort-header:after {
+        content:'';
+        float:right;
+        margin-top:7px;
+        border-width:0 5px 5px;
+        border-style:solid;
+        border-color:#404040 transparent;
+        visibility:hidden
+    }
+    .tg-sort-header:hover:after {visibility:visible}
+    .tg-sort-asc:after,
+    .tg-sort-asc:hover:after,
+    .tg-sort-desc:after {
+        visibility:visible;
+        opacity: .4
+    }
+    .tg-sort-desc:after {
+        border-bottom:none;
+        border-width:5px 5px 0
+    }
+
+    #container_hist {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 100px;
+        margin-top: 20px;
+    }
+
+    .chart {
+        padding: 2rem;
+        border: 1px solid #05f8f8;
+        border-radius: 1rem;
+        background: #251c35;
+        box-shadow: 0 0 16px rgba(0, 0, 0, 0.8);
+    }
+    container {
+        width: 900px;
+        height: 500px;
+        margin-top: 15px;
+    }
+    #counter {
+        background-color: #dcd1d1;
+        padding: 5px;
+        width: 250px;
+        border-radius: 10px;
+        margin-left: 0px;
+        opacity: 0.8
+    }
+    #average {
+        background-color: #dcd1d1;
+        padding: 5px;
+        width: 350px;
+        border-radius: 10px;
+        opacity: 0.8
+    }
+
+</style>
+<body>
+<script type="text/javascript">
+    const token = "${token}";
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace('-', '+').replace('_', '/');
+    const payload = JSON.parse(atob(base64));
+    const username = payload.sub;
+    alert(username);
+</script>
+<div class="bg-image">
+<!--    <div th:with="response=${...}">-->
+<!--        <div th:with="token=${response.text.match(/token=([^\s,]+)/) ? RegExp.$1 : null}"-->
+<!--             th:text="${token}">-->
+<!--        </div>-->
+<!--    </div>-->
+    <blockquote class="blockquote text-center">
+        <a href="#" tabindex="10" id="intro_btn1" class="btn btn-primary btn-lg btn-blue disabled placeholder col-4" aria-hidden="true">
+            <strong><b>LIST OF CLIENTS</b></strong></a>
+<!--        <h1 th:inline="text">Hello, <span th:remove="tag" sec:authentication="name">thymeleaf</span>!</h1>-->
+        <blockquote>
+            <span class="icon"><ion-icon name="person-circle-outline"></ion-icon></span>
+<!--            <button id="user"><script>username</script></button>-->
+        </blockquote>
+        <form th:action="@{/auth/logout}" method="get">
+            <button class="sign_out">Sign Out</button>
+        </form>
+<!--        <th:block th:if="${#authentication.getPrincipal().getUsername() == 'Matthew'}">-->
+        <a th:href="@{/auth/register}"><button class="register_btn">Register</button></a>
+<!--        </th:block>-->
+<!--        <button><a href="register.html">Register</a></button>-->
+<!--        <h1 th:inline="text">Hello, <span th:remove="tag" sec:authentication="name">thymeleaf</span>!</h1>-->
+    </blockquote><!-- <textarea style="font-family: Arial; font-size: 20px; font-weight: bold;"> List of registered cars </textarea> -->
+    <blockquote class="blockquote text-center">
+        <button type="button btn btn-dark disabled" id="intro_btn2">Search for clients  by any <p th:text="${token.value}"></p>criteria</b></button>
+    </blockquote>
+
+    <div class="row" style="margin-left: -250px; margin-top: -13px;">
+        <div class="col-md-8 offset-md-4">
+            <form th:action="@{/}" style="margin-bottom: 2px">c
+                <input type="text" name="keyword" id="keyword" placeholder="search here" size="70" th:value="${keyword}" required/><label for="keyword"><i class="fas fa-search"></i></label>
+                <input type="submit" class="btn-success btn-sm" value="SEARCH"/>
+                <input type="button" class="btn-warning btn-sm" value="CLEAN/REFRESH" id="btnClear" onclick="clearSearch()"/>
+            </form>
+        </div>
+    </div>
+
+    <table id="tg-HGuDz" class="tg">
+        <thead>
+        <tr>
+            <td class="tg-0lax">Client ID</td>
+            <td class="tg-0lax">Full name</td>
+            <td class="tg-0lax">Visit date</td>
+            <td class="tg-0lax">Service</td>
+            <td class="tg-0lax">Master name</td>
+            <td class="tg-0lax">Actions</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="client: ${listClients}"> <!-- for car in listCars. Обращаемся по именованному индексу-->
+            <th scope="row" class="text-white" th:text="${client.id}">Client ID</th>
+            <th scope="row" class="text-white" th:text="${client.full_name}">Full name is missing</th>
+            <th scope="row" class="text-white" th:text="${client.visit_date}">Visit name is missing</th>
+            <th scope="row" class="text-white" th:text="${client.service}">Service is missing</th>
+            <th scope="row" class="text-white" th:text="${client.master_name}">Master name is missing</th>
+
+            <td>
+                <a th:href="@{'/edit/' + ${client.id}}"><button type="button" class="btn btn-info">Edit</button></a>
+                <a th:href="@{'/delete/' + ${client.id}}"><button type="button" class="btn btn-danger">Delete</button></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <!--    <p><input type="button" id="bt" value="Show Table Data" onclick="showTableData()" /></p>-->
+    <!--    <p id="info"></p>-->
+    <!--    <p><input type="button" id="bt1" value="Show Table Data 222" onclick="write(getBodyText(window))" /></p>-->
+    <script charset="utf-8">var TGSort=window.TGSort||function(n){"use strict";function r(n){return n?n.length:0}function t(n,t,e,o=0){for(e=r(n);o<e;++o)t(n[o],o)}function e(n){return n.split("").reverse().join("")}function o(n){var e=n[0];return t(n,function(n){for(;!n.startsWith(e);)e=e.substring(0,r(e)-1)}),r(e)}function u(n,r,e=[]){return t(n,function(n){r(n)&&e.push(n)}),e}var a=parseFloat;function i(n,r){return function(t){var e="";return t.replace(n,function(n,t,o){return e=t.replace(r,"")+"."+(o||"").substring(1)}),a(e)}}var s=i(/^(?:\s*)([+-]?(?:\d+)(?:,\d{3})*)(\.\d*)?$/g,/,/g),c=i(/^(?:\s*)([+-]?(?:\d+)(?:\.\d{3})*)(,\d*)?$/g,/\./g);function f(n){var t=a(n);return!isNaN(t)&&r(""+t)+1>=r(n)?t:NaN}function d(n){var e=[],o=n;return t([f,s,c],function(u){var a=[],i=[];t(n,function(n,r){r=u(n),a.push(r),r||i.push(n)}),r(i)<r(o)&&(o=i,e=a)}),r(u(o,function(n){return n==o[0]}))==r(o)?e:[]}function v(n){if("TABLE"==n.nodeName){for(var a=function(r){var e,o,u=[],a=[];return function n(r,e){e(r),t(r.childNodes,function(r){n(r,e)})}(n,function(n){"TR"==(o=n.nodeName)?(e=[],u.push(e),a.push(n)):"TD"!=o&&"TH"!=o||e.push(n)}),[u,a]}(),i=a[0],s=a[1],c=r(i),f=c>1&&r(i[0])<r(i[1])?1:0,v=f+1,p=i[f],h=r(p),l=[],g=[],N=[],m=v;m<c;++m){for(var T=0;T<h;++T){r(g)<h&&g.push([]);var C=i[m][T],L=C.textContent||C.innerText||"";g[T].push(L.trim())}N.push(m-v)}t(p,function(n,t){l[t]=0;var a=n.classList;a.add("tg-sort-header"),n.addEventListener("click",function(){var n=l[t];!function(){for(var n=0;n<h;++n){var r=p[n].classList;r.remove("tg-sort-asc"),r.remove("tg-sort-desc"),l[n]=0}}(),(n=1==n?-1:+!n)&&a.add(n>0?"tg-sort-asc":"tg-sort-desc"),l[t]=n;var i,f=g[t],m=function(r,t){return n*f[r].localeCompare(f[t])||n*(r-t)},T=function(n){var t=d(n);if(!r(t)){var u=o(n),a=o(n.map(e));t=d(n.map(function(n){return n.substring(u,r(n)-a)}))}return t}(f);(r(T)||r(T=r(u(i=f.map(Date.parse),isNaN))?[]:i))&&(m=function(r,t){var e=T[r],o=T[t],u=isNaN(e),a=isNaN(o);return u&&a?0:u?-n:a?n:e>o?n:e<o?-n:n*(r-t)});var C,L=N.slice();L.sort(m);for(var E=v;E<c;++E)(C=s[E].parentNode).removeChild(s[E]);for(E=v;E<c;++E)C.appendChild(s[v+L[E-v]])})})}}n.addEventListener("DOMContentLoaded",function(){for(var t=n.getElementsByClassName("tg"),e=0;e<r(t);++e)try{v(t[e])}catch(n){}})}(document)</script>
+
+    <div id="container_hist">
+        <div class="chart">
+            <canvas id="barchart" width="700" height="400"></canvas>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function getBodyText(win) {
+            var doc = win.document, body = doc.body, selection, range, bodyText;
+            if (body.createTextRange) {
+                return body.createTextRange().text;
+            } else if (win.getSelection) {
+                selection = win.getSelection();
+                range = doc.createRange();
+                range.selectNodeContents(body);
+                selection.addRange(range);
+                bodyText = selection.toString();
+                selection.removeAllRanges();
+                const regex = /\d{4}-\d{2}-(\d{2})/g;
+                const daysArray = [];
+                let match = regex.exec(bodyText);
+                while (match !== null) {
+                    daysArray.push(match[1]);
+                    match = regex.exec(bodyText);
+                }
+                return daysArray;
+            }
+        }
+
+        txt = getBodyText(window);
+        // alert(txt);
+        var arr = txt;
+        arr = arr.filter(e => e);
+        const dict = {};
+        for (let i = 0; i < arr.length; i++) {
+            const elem = arr[i];
+            if (dict[elem]) {
+                dict[elem]++;
+            } else {
+                dict[elem] = 1;
+            }
+        }
+        const sortedKeys = Object.keys(dict).sort();
+        const valuesArray = [];
+        for (let i = 0; i < sortedKeys.length; i++) {
+            const key = sortedKeys[i];
+            const value = dict[key];
+            valuesArray.push(value);
+        }
+    </script>
+
+
+    <!--        // function sortOnKeys(dict) {-->
+    <!--        //     var sorted = [];-->
+    <!--        //     for(var key in dict) {-->
+    <!--        //         sorted[sorted.length] = key;-->
+    <!--        //     }-->
+    <!--        //     sorted.sort();-->
+    <!--        //     var tempDict = {};-->
+    <!--        //     for(var i = 0; i < sorted.length; i++) {-->
+    <!--        //         tempDict[sorted[i]] = dict[sorted[i]];-->
+    <!--        //     }-->
+    <!--        //     return tempDict;-->
+    <!--        // }-->
+    <!--        //-->
+    <!--        // dict = sortOnKeys(dict);-->
+
+    <!--        // console.log(Object.values(dict));-->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
+    <script type="text/javascript">
+        const ctx = document.getElementById('barchart').getContext('2d');
+        const barchart = new Chart(ctx, {
+            type: 'bar',
+            data: { labels: sortedKeys,
+                datasets: [{
+                    label: 'Show the results',
+                    data: valuesArray,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Histogram of clients by days',
+                        fullSize: true,
+                        color: 'silver',
+                        font: {weight: 'bold', size: 24},
+                    },
+                    data: {
+                        color: 'silver'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'silver',
+                            transparent: '50%',
+                            display: 'flex'
+                            // offset: true
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+    <p class="text-white">
+        <script type="text/javascript">
+            function getRowsColumn() {
+                let table = document.getElementById('tg-HGuDz')
+                let tBody = table.querySelector('tbody') // как будет определяться тело нашей таблицы
+                const count = tBody.querySelectorAll('tr').length;
+                document.write('Total quantity of clients: ' + count)
+            }
+        </script>
+    </p>
+    <p class="text-white">
+        <script type="text/javascript">
+            function getAverage() {
+                let table = document.getElementById('tg-HGuDz')
+                let tBody = table.querySelector('tbody') // как будет определяться тело нашей таблицы
+                const count = tBody.querySelectorAll('tr').length;
+                document.write('Average amount of clients per day: ' + count/sortedKeys.length)
+            }
+        </script>
+    </p>
+    <blockquote class="blockquote" style="margin-left: 295px; margin-top: 2px">
+        <button type="button btn btn-dark disabled" id="counter"><script>getRowsColumn()</script></button>
+    </blockquote>
+    <blockquote class="blockquote" style="margin-left: 710px; margin-top: -60px">
+        <button type="button btn btn-dark disabled" id="average"><script>getAverage()</script></button>
+    </blockquote>
+    <blockquote class="blockquote text-center">
+        <a href="/new">
+            <button type="button" class="btn btn-primary btn-lg" data-toggle="button" aria-pressed="false" autocomplete="off">Add a client</button>
+        </a>
+    </blockquote>
+</div>
+
+<script type="text/javascript">
+    function clearSearch() {
+        window.location="[[@{/}]]" // очищаем все символы
+    }
+</script>
+<!--<script>-->
+<!--    $(document).ready(function(){-->
+<!--        //Скрыть PopUp при загрузке страницы-->
+<!--        PopUpShow();-->
+<!--    });-->
+<!--    //Функция отображения PopUp-->
+<!--    function PopUpShow(){-->
+<!--        $("#popup1").show();-->
+<!--    }-->
+<!--    //Функция скрытия PopUp-->
+<!--    function PopUpHide(){-->
+<!--        $("#popup1").remove();-->
+<!--    }-->
+<!--</script>-->
+
+<!--<script type="javascript">-->
+<!--    const wrapper = document.querySelector('.wrapper');-->
+<!--    const loginLink = document.querySelector('.login-link');-->
+<!--    const btnPopup = document.querySelector('.log_btn');-->
+<!--    const iconClose = document.querySelector('.icon-close');-->
+<!--    const registerLink = document.querySelector('.register-link');-->
+<!--    registerLink.addEventListener('click', ()=> {-->
+<!--        wrapper.classList.add('active');-->
+<!--    })-->
+<!--    loginLink.addEventListener('click', ()=> {-->
+<!--        wrapper.classList.remove('active');-->
+<!--    });-->
+<!--    btnPopup.addEventListener('click', ()=> {-->
+<!--        wrapper.classList.add('active-popup');-->
+<!--    });-->
+<!--    iconClose.addEventListener('click', ()=> {-->
+<!--        wrapper.classList.remove('active-popup');-->
+<!--    });-->
+<!--</script>-->
+
+
+
+
+<!--<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>-->
+<!--<script type="text/javascript" src="chart1.js"></script>-->
+
+<!--<script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js"></script>-->
+<!--<div id="container"></div>-->
+<!--<script th:inline="javascript">-->
+<!--    // anychart.onDocumentReady(function () {-->
+<!--    //     let car = null;-->
+<!--    //     let length = Object.keys(car).length;-->
+<!--    //     let arr = [];-->
+<!--    //     for (let i = 0; i<length; i++) {-->
+<!--    //         arr.push(car[i].dateIssue)-->
+<!--    //     }-->
+<!--    //     var result = {};-->
+<!--    //     arr.forEach(function (a) {-->
+<!--    //         result[a] = result[a]+1||1;-->
+<!--    //     });-->
+<!--    //     var chart = anychart.column();-->
+<!--    //     var series = chart.column(Object.entries(result).sort());-->
+<!--    //-->
+<!--    //     chart.xAxis().title('Date');-->
+<!--    //     chart.yAxis().title('Quantity of cars');-->
+<!--    //     chart.title("Histogram");-->
+<!--    //     chart.container("container");-->
+<!--    //     chart.draw();-->
+
+<!--        var data = [-->
+<!--            ["John", 10000],-->
+<!--            ["Jake", 12000],-->
+<!--            ["Peter", 13000],-->
+<!--            ["James", 10000],-->
+<!--            ["Mary", 9000]-->
+<!--        ];-->
+
+<!--// create a chart-->
+<!--        chart = anychart.column();-->
+
+<!--// create a column series and set the data-->
+<!--        var series = chart.column(data);-->
+
+<!--// set the container id-->
+<!--        chart.container("container");-->
+
+<!--// initiate drawing the chart-->
+<!--        chart.draw();-->
+<!--    });-->
+<!--    // google.charts.load("current", {packages:["corechart"]});-->
+<!--    // google.charts.setOnLoadCallback(drawChart);-->
+<!--    // function drawChart() {-->
+<!--    //     var data = google.visualization.arrayToDataTable(-->
+<!--    //         [-->
+<!--    //             ['Dinosaur', 'Length'],-->
+<!--    //             ['Acrocanthosaurus (top-spined lizard)', 12.2],-->
+<!--    //             ['Albertosaurus (Alberta lizard)', 9.1]]-->
+<!--    //     );-->
+<!--    //     var options = {title: 'Brands of frequent occurence', legend: {position: 'none'}, };-->
+<!--    //     var chart = new google.visualization.Histogram(document.getElementById('chart_div'));-->
+<!--    //     chart.draw(data, options);-->
+<!--    // }-->
+
+<!--</script>-->
+<script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
